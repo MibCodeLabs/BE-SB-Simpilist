@@ -4,8 +4,8 @@ import com.mib.simpilist.Enum.TodoItemStatus;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "list_item")
-public class ListItem extends BaseEntity{
+@Table(name = "list_items")
+public class ListItems extends BaseEntity{
 
     @Column(name = "title",nullable = false)
     private String title;
@@ -18,7 +18,7 @@ public class ListItem extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id",nullable = false)
-    private ListGroup listGroup;
+    private ListGroups listGroups;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status",nullable = false)

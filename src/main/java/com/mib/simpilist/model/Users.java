@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,11 +12,11 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-@Table(name = "user",
+@Table(name = "users",
         uniqueConstraints={
                 @UniqueConstraint(columnNames = {"phone_code","phone_number"})
         })
-public class User extends BaseEntity{
+public class Users extends BaseEntity{
 
     @Column(name = "first_name",nullable = false)
     private String firstName;

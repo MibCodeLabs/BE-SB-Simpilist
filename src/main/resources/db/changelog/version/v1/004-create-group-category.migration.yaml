@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Ib
       changes:
         - createTable:
-            tableName: group_category
+            tableName: group_categories
             columns:
               - column:
                   name: id
@@ -28,15 +28,27 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
 
   - changeSet:
       id: 2
       author: Ib
       changes:
         - addForeignKeyConstraint:
-            baseTableName: group_category
+            baseTableName: group_categories
             baseColumnNames: user_id
-            referencedTableName: user
+            referencedTableName: users
             referencedColumnNames: id
             constraintName: fk_group_category_user
 
@@ -47,7 +59,7 @@ databaseChangeLog:
       author: Ib
       changes:
         - addColumn:
-            tableName: list_group
+            tableName: list_groups
             columns:
               - column:
                   name: group_category_id
@@ -59,8 +71,8 @@ databaseChangeLog:
       author: Ib
       changes:
         - addForeignKeyConstraint:
-            baseTableName: list_group
+            baseTableName: list_groups
             baseColumnNames: group_category_id
-            referencedTableName: group_category
+            referencedTableName: group_categories
             referencedColumnNames: id
             constraintName: fk_list_group_group_category

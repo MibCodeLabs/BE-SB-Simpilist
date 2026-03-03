@@ -4,7 +4,7 @@ import com.mib.simpilist.dto.Auth.AuthenticationResponse;
 import com.mib.simpilist.dto.Auth.LoginRequestDto;
 import com.mib.simpilist.exception.ClientException;
 import com.mib.simpilist.exception.Forbidden;
-import com.mib.simpilist.model.User;
+import com.mib.simpilist.model.Users;
 import com.mib.simpilist.service.UserService;
 import com.mib.simpilist.utililty.factory.AuthFactory;
 import com.mib.simpilist.utililty.factory.UserFactory;
@@ -21,23 +21,23 @@ public class AuthService {
 
     public AuthenticationResponse authenticate(LoginRequestDto loginRequestDto){
 
-        User user=userService.findUserByEmailOptional(loginRequestDto.getEmail())
-                .orElseThrow(() -> new ClientException("This email is no registered"));
+        Users users =userService.findUserByEmailOptional(loginRequestDto.getEmail())
+                .orElseThrow(() -> new ClientException("This email is not registered"));
 
-        validatePassword(user,loginRequestDto);
+        validatePassword(users,loginRequestDto);
 
         return AuthFactory.buildAuthenticationResponse(
-                UserFactory.buildUserDto(user),
-                jwtService.generateAccessToken(user),
-                jwtService.generateRefreshToken(user)
+                UserFactory.buildUserDto(users),
+                jwtService.generateAccessToken(users),
+                jwtService.generateRefreshToken(users)
         );
     }
 
-    private void validatePassword(User user,LoginRequestDto loginRequestDto){
+    private void validatePassword(Users users, LoginRequestDto loginRequestDto){
         //add numbered retries and account ban after multiple invalid retries
         if(!passwordService.verifyPassword(loginRequestDto.getPassword(),
-                user.getPassword(),
-                user.getSalt())){
+                users.getPassword(),
+                users.getSalt())){
             throw new Forbidden("Invalid Password");
         }
     }

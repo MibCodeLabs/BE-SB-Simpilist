@@ -1,6 +1,6 @@
 package com.mib.simpilist.service.Security;
 
-import com.mib.simpilist.model.User;
+import com.mib.simpilist.model.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -30,19 +30,19 @@ public class JwtService {
         this.refreshExpiration = refreshExpiration;
     }
 
-    public String generateAccessToken(User user) {
+    public String generateAccessToken(Users users) {
         return Jwts.builder()
-                .setSubject(user.getEmail())
-                .claim("userId", user.getId())
+                .setSubject(users.getEmail())
+                .claim("userId", users.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + accessExpiration))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String generateRefreshToken(User user) {
+    public String generateRefreshToken(Users users) {
         return Jwts.builder()
-                .setSubject(user.getEmail())
+                .setSubject(users.getEmail())
                 .claim("type", "refresh")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + refreshExpiration))

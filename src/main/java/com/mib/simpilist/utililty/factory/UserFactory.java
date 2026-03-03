@@ -1,11 +1,11 @@
 package com.mib.simpilist.utililty.factory;
 
 import com.mib.simpilist.dto.Auth.UserDto;
-import com.mib.simpilist.model.User;
+import com.mib.simpilist.model.Users;
 
 public class UserFactory {
-    public static User buildRegistrationUser(UserDto userDto, String salt, String passwordHash){
-        return User
+    public static Users buildRegistrationUser(UserDto userDto, String salt, String passwordHash){
+        return Users
                 .builder()
                 .email(userDto.getEmail())
                 .firstName(userDto.getFirstName())
@@ -17,15 +17,15 @@ public class UserFactory {
                 .build();
     }
 
-    public static UserDto buildUserDto(User user){
+    public static UserDto buildUserDto(Users users){
         return UserDto
                 .builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .phoneCode(user.getPhoneCode())
-                .phoneNumber(user.getPhoneNumber())
+                .id(users.getId())
+                .email(users.getEmail())
+                .firstName(users.getFirstName())
+                .lastName(users.getLastName())
+                .phoneCode(users.getPhoneCode())
+                .phoneNumber(users.getPhoneNumber())
                 .build();
     }
 }

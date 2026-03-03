@@ -1,8 +1,8 @@
 package com.mib.simpilist.dto.ListGroup;
 
 import com.mib.simpilist.dto.ListItem.ListItemDto;
-import com.mib.simpilist.model.GroupCategory;
-import com.mib.simpilist.model.User;
+import com.mib.simpilist.model.GroupCategories;
+import com.mib.simpilist.model.Users;
 import lombok.Data;
 
 import java.util.Set;
@@ -11,8 +11,8 @@ import java.util.Set;
 public class ListGroupDto {
     private Long id;
     private String groupName;
-    private GroupCategory groupCategory;
-    private User user;
+    private GroupCategories groupCategories;
+    private Users users;
     private Integer priority;
     private Set<ListItemDto> items;
 }

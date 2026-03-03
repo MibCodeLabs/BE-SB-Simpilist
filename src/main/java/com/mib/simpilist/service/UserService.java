@@ -2,8 +2,8 @@ package com.mib.simpilist.service;
 
 import com.mib.simpilist.dto.Auth.Registration.UserRegistrationRequest;
 import com.mib.simpilist.exception.ResourceNotFoundException;
-import com.mib.simpilist.model.User;
-import com.mib.simpilist.repository.UserRepo;
+import com.mib.simpilist.model.Users;
+import com.mib.simpilist.repository.UsersRepo;
 import com.mib.simpilist.service.Security.PasswordService;
 import com.mib.simpilist.utililty.factory.UserFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -18,30 +18,30 @@ import java.util.Optional;
 @Service
 @Slf4j(topic = "UserService")
 public class UserService {
-    private final UserRepo userRepo;
+    private final UsersRepo usersRepo;
     private final PasswordService passwordService;
 
-    public UserService(@Lazy UserRepo userRepo,@Lazy PasswordService passwordService){
-        this.userRepo=userRepo;
+    public UserService(@Lazy UsersRepo usersRepo, @Lazy PasswordService passwordService){
+        this.usersRepo = usersRepo;
         this.passwordService=passwordService;
     }
 
-    private Optional<User> findUserByIdOptional(Long id){
-        return userRepo.findById(id);
+    private Optional<Users> findUserByIdOptional(Long id){
+        return usersRepo.findById(id);
     }
 
-    private User findUserById(Long id){
+    private Users findUserById(Long id){
         return findUserByIdOptional(id).orElseThrow(()->{
             log.error("User with id:{} does not exists",id);
             return new ResourceNotFoundException("not found");
         });
     }
 
-    public Optional<User> findUserByEmailOptional(String email){
-        return userRepo.findByEmailLike(email);
+    public Optional<Users> findUserByEmailOptional(String email){
+        return usersRepo.findByEmailLike(email);
     }
 
-    public User findUserByEmail(String email) {
+    public Users findUserByEmail(String email) {
         return findUserByEmailOptional(email).orElseThrow(
                 () -> {
                     log.error("No user Found with email:{}", email);
@@ -52,13 +52,13 @@ public class UserService {
 
     private void RegisterNewUser(UserRegistrationRequest userRegistrationRequest) throws NoSuchAlgorithmException, InvalidKeySpecException {
         Pair<String,String> saltAndHash= passwordService.generateSaltAndSaltedHash(userRegistrationRequest.getPassword());
-        User user=UserFactory.buildRegistrationUser(userRegistrationRequest,saltAndHash.getFirst(),saltAndHash.getSecond());
-        save(user);
+        Users users =UserFactory.buildRegistrationUser(userRegistrationRequest,saltAndHash.getFirst(),saltAndHash.getSecond());
+        save(users);
     }
 
-    private User save(User user){
-        log.info("Saving new user {}",user);
-        return userRepo.save(user);
+    private Users save(Users users){
+        log.info("Saving new user {}", users);
+        return usersRepo.save(users);
     }
 
 

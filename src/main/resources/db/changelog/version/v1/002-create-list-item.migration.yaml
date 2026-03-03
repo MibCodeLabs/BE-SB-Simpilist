@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Ib
       changes:
         - createTable:
-            tableName: list_item
+            tableName: list_items
             columns:
               - column:
                   name: id
@@ -27,5 +27,17 @@ databaseChangeLog:
               - column:
                   name: status
                   type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false

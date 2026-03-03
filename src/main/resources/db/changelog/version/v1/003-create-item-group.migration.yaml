@@ -5,7 +5,7 @@ databaseChangeLog:
       author: Ib
       changes:
         - createTable:
-            tableName: list_group
+            tableName: list_groups
             columns:
               - column:
                   name: id
@@ -27,6 +27,18 @@ databaseChangeLog:
               - column:
                   name: priority
                   type: int
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
 
 
 #add group id column
@@ -35,7 +47,7 @@ databaseChangeLog:
       author: Ib
       changes:
         - addColumn:
-            tableName: list_item
+            tableName: list_items
             columns:
               - column:
                   name: group_id
@@ -49,16 +61,16 @@ databaseChangeLog:
       author: Ib
       changes:
         - addForeignKeyConstraint:
-            baseTableName: list_group
+            baseTableName: list_groups
             baseColumnNames: user_id
-            referencedTableName: user
+            referencedTableName: users
             referencedColumnNames: id
             constraintName: fk_list_group_user
 
         - addForeignKeyConstraint:
-            baseTableName: list_item
+            baseTableName: list_items
             baseColumnNames: group_id
-            referencedTableName: list_group
+            referencedTableName: list_groups
             referencedColumnNames: id
             constraintName: fk_list_item_list_group
 
@@ -68,7 +80,7 @@ databaseChangeLog:
       author: Ib
       changes:
       - createIndex:
-          tableName: list_item
+          tableName: list_items
           indexName: idx_list_item_group_id
           columns:
           - column:
@@ -82,5 +94,5 @@ databaseChangeLog:
       changes:
         - addUniqueConstraint:
             columnNames: user_id, group_name
-            tableName: list_group
+            tableName: list_groups
             constraintName: unique_user_group_name

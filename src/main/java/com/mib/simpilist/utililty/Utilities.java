@@ -54,9 +54,9 @@ public class Utilities {
     public static ResponseEntity<Object> generateErrorResponse(Exception exception,ErrorCodes errorCodes,HttpStatus status){
         return new ResponseEntity<> (
                 new ErrorResponse(
+                        status.getReasonPhrase(),
                         errorCodes,
-                        status,
-                        exception
+                        status
                 ),
                 status);
     }
