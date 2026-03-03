@@ -1,0 +1,28 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: update
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/simpilist
+    username: postgres
+    password: Postgres0907007
+
+
+logging:
+  level:
+    org.springframework: INFO
+
+
+
+jwt:
+  signing:
+    secretKey: ThisIsASecretIwillAddLater
+  token:
+    expiration: 3600000  # 1 hour in ms
+    issuer: dev

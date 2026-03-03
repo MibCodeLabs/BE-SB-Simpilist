@@ -1,0 +1,47 @@
+Priority order (this matters)
+
+we need to do this in order:
+
+Global exception translator
+Missing body / malformed JSON
+Validation errors
+Catch-all fallback
+Business exceptions (as features are added)
+{
+The 5 categories that cover ~95% of cases
+In real production apps, teams usually translate only these:
+
+1)Bad request shape
+Missing body
+Malformed JSON
+
+2) Validation failures
+@NotNull, @Size, etc.
+
+3) Type mismatches
+Wrong param types
+
+4) Resource not found
+Invalid IDs
+Wrong URLs
+
+5) Unexpected server errors
+Null pointers
+Bugs
+}
+What may be needed to be implemented (minimum)
+
+1 Global exception translator
+→ One place that converts any error in ErrorResponse
+
+2 Handle framework request errors
+→ Missing body, bad JSON, validation errors
+→ These happen before controller methods
+
+3 Small error-code set
+→ BAD_REQUEST, VALIDATION_ERROR, UNAUTHORIZED, NOT_FOUND, INTERNAL_ERROR
+
+4 Catch-all fallback
+→ For unexpected server bugs
+→ Always returns a safe, consistent error
+

@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Ib
+      changes:
+        - createTable:
+            tableName: group_category
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: category_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: priority
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: Ib
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: group_category
+            baseColumnNames: user_id
+            referencedTableName: user
+            referencedColumnNames: id
+            constraintName: fk_group_category_user
+
+
+#add group category id column
+  - changeSet:
+      id: 3
+      author: Ib
+      changes:
+        - addColumn:
+            tableName: list_group
+            columns:
+              - column:
+                  name: group_category_id
+                  type: BIGINT
+
+#add foreign key
+  - changeSet:
+      id: 4
+      author: Ib
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: list_group
+            baseColumnNames: group_category_id
+            referencedTableName: group_category
+            referencedColumnNames: id
+            constraintName: fk_list_group_group_category
