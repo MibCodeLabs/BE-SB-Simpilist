@@ -1,7 +1,5 @@
 package com.mib.simpilist.utililty;
 
-import java.lang.reflect.Array;
-
 public class Constants {
     public static final String[] PUBLIC_URLS= {
             "auth/login",

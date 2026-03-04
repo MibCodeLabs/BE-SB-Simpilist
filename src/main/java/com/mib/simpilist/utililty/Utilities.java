@@ -3,20 +3,10 @@ package com.mib.simpilist.utililty;
 import com.mib.simpilist.Enum.ErrorCodes;
 import com.mib.simpilist.exception.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import java.lang.reflect.Array;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.util.Base64;
 import java.util.Collection;
 
 @Slf4j(topic ="Utilities" )

@@ -54,7 +54,7 @@ public class UserService {
     public void registerNewUser(UserRegistrationRequest userRegistrationRequest) throws NoSuchAlgorithmException, InvalidKeySpecException {
         if(findUserByEmailOptional(userRegistrationRequest.getEmail()).isPresent()){
             throw new ClientException("Email already Registered");
-        };
+        }
         Pair<String,String> saltAndHash= passwordService.generateSaltAndSaltedHash(userRegistrationRequest.getPassword());
         User user =UserFactory.buildRegistrationUser(userRegistrationRequest,saltAndHash.getFirst(),saltAndHash.getSecond());
         save(user);

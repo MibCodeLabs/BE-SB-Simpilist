@@ -1,33 +1,45 @@
 package com.mib.simpilist.service.Security;
 
 import com.mib.simpilist.model.User;
+import com.mib.simpilist.utililty.Utilities;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
 
-    private final Key key;
+    private final Key secretKey;
     private final long accessExpiration;
     private final long refreshExpiration;
+    private final String issuer;
 
     public JwtService(
-            @Value("${security.jwt.secret}") String secret,
+            @Value("${security.jwt.signing.secret}") String secret,
             @Value("${security.jwt.access-expiration}") long accessExpiration,
-            @Value("${security.jwt.refresh-expiration}") long refreshExpiration
+            @Value("${security.jwt.refresh-expiration}") long refreshExpiration,
+            @Value("${security.jwt.issuer}") String issuer
     ) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.accessExpiration = accessExpiration;
         this.refreshExpiration = refreshExpiration;
+        this.issuer=issuer;
     }
 
     public String generateAccessToken(User user) {
@@ -36,7 +48,8 @@ public class JwtService {
                 .claim("userId", user.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + accessExpiration))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .setIssuer(issuer)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -46,13 +59,14 @@ public class JwtService {
                 .claim("type", "refresh")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + refreshExpiration))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .setIssuer(issuer)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(key)
+                .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -70,5 +84,24 @@ public class JwtService {
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public Authentication getAuthentication(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        String username = claims.getSubject();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if (Utilities.isNotNullOrEmpty(claims.get("roles"))) {
+            authorities.addAll(Arrays.stream(claims.get("roles", String.class).split(","))
+                    .map(SimpleGrantedAuthority::new)
+                    .toList());
+        }
+
+
+        return new UsernamePasswordAuthenticationToken(username, null, authorities);
     }
 }

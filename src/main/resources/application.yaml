@@ -34,8 +34,4 @@ security:
   PBKDF2-bits: 256
   PBKDF2-algorithm: PBKDF2WithHmacSHA256
   salt-bytes-length: 16
-  jwt:
-    secret: "This is a test secret will replace later with env variable"
-    access-expiration: 900000
-    refresh-expiration: 604800000
 
