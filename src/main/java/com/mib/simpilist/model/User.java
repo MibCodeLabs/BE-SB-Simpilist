@@ -4,10 +4,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Builder
 @Getter
@@ -16,7 +16,7 @@ import lombok.Setter;
         uniqueConstraints={
                 @UniqueConstraint(columnNames = {"phone_code","phone_number"})
         })
-public class Users extends BaseEntity{
+public class User extends BaseEntity{
 
     @Column(name = "first_name",nullable = false)
     private String firstName;

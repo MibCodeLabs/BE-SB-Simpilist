@@ -1,7 +1,14 @@
 i will need to implement security, for now jwt will do
 
 
-created users now we need to implement
+created user now we need to implement
 usercontext and basic spring security stuff
+
+
+i have added the basic functionality for registering new user
+
+although everything is currently tested manually via insomnia we will write tests later
+
+the tests will also include frontend and integration
 
 

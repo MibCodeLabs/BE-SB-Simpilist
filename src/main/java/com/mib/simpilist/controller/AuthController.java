@@ -2,8 +2,6 @@ package com.mib.simpilist.controller;
 
 import com.mib.simpilist.dto.Auth.AuthenticationResponse;
 import com.mib.simpilist.dto.Auth.LoginRequestDto;
-import com.mib.simpilist.dto.Auth.UserTokensDto;
-import com.mib.simpilist.dto.Auth.UserDto;
 import com.mib.simpilist.service.Security.AuthService;
 import com.mib.simpilist.service.UserService;
 import lombok.AllArgsConstructor;
@@ -22,12 +20,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody LoginRequestDto loginRequestDto) throws Exception {
-        return authService.authenticate(loginRequestDto);
-    }
-
-
-    @PostMapping("/register")
-    public AuthenticationResponse registerNewUser(@RequestBody LoginRequestDto loginRequestDto) throws Exception {
         return authService.authenticate(loginRequestDto);
     }
 }

@@ -7,17 +7,17 @@ import jakarta.persistence.*;
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"user", "group_name"})
         })
-public class ListGroups extends BaseEntity {
+public class ListGroup extends BaseEntity {
     @Column(name = "group_name", nullable = false)
     private String groupName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_category_id")
-    private GroupCategories groupCategories;
+    private GroupCategory groupCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)
-    private Users users;
+    private User user;
 
     @Column(name = "priority")
     private Integer priority;

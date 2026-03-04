@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "group_categories")
-public class GroupCategories extends BaseEntity{
+public class GroupCategory extends BaseEntity{
 
     @Column(name = "category_name",nullable = false)
     private String categoryName;
@@ -14,5 +14,5 @@ public class GroupCategories extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)
-    private Users users;
+    private User user;
 }

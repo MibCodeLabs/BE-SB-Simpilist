@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "list_items")
-public class ListItems extends BaseEntity{
+public class ListItem extends BaseEntity{
 
     @Column(name = "title",nullable = false)
     private String title;
@@ -18,7 +18,7 @@ public class ListItems extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id",nullable = false)
-    private ListGroups listGroups;
+    private ListGroup listGroup;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status",nullable = false)

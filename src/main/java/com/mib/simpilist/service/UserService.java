@@ -1,8 +1,9 @@
 package com.mib.simpilist.service;
 
 import com.mib.simpilist.dto.Auth.Registration.UserRegistrationRequest;
+import com.mib.simpilist.exception.ClientException;
 import com.mib.simpilist.exception.ResourceNotFoundException;
-import com.mib.simpilist.model.Users;
+import com.mib.simpilist.model.User;
 import com.mib.simpilist.repository.UsersRepo;
 import com.mib.simpilist.service.Security.PasswordService;
 import com.mib.simpilist.utililty.factory.UserFactory;
@@ -26,22 +27,22 @@ public class UserService {
         this.passwordService=passwordService;
     }
 
-    private Optional<Users> findUserByIdOptional(Long id){
+    private Optional<User> findUserByIdOptional(Long id){
         return usersRepo.findById(id);
     }
 
-    private Users findUserById(Long id){
+    private User findUserById(Long id){
         return findUserByIdOptional(id).orElseThrow(()->{
             log.error("User with id:{} does not exists",id);
             return new ResourceNotFoundException("not found");
         });
     }
 
-    public Optional<Users> findUserByEmailOptional(String email){
+    public Optional<User> findUserByEmailOptional(String email){
         return usersRepo.findByEmailLike(email);
     }
 
-    public Users findUserByEmail(String email) {
+    public User findUserByEmail(String email) {
         return findUserByEmailOptional(email).orElseThrow(
                 () -> {
                     log.error("No user Found with email:{}", email);
@@ -50,15 +51,18 @@ public class UserService {
         );
     }
 
-    private void RegisterNewUser(UserRegistrationRequest userRegistrationRequest) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public void registerNewUser(UserRegistrationRequest userRegistrationRequest) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        if(findUserByEmailOptional(userRegistrationRequest.getEmail()).isPresent()){
+            throw new ClientException("Email already Registered");
+        };
         Pair<String,String> saltAndHash= passwordService.generateSaltAndSaltedHash(userRegistrationRequest.getPassword());
-        Users users =UserFactory.buildRegistrationUser(userRegistrationRequest,saltAndHash.getFirst(),saltAndHash.getSecond());
-        save(users);
+        User user =UserFactory.buildRegistrationUser(userRegistrationRequest,saltAndHash.getFirst(),saltAndHash.getSecond());
+        save(user);
     }
 
-    private Users save(Users users){
-        log.info("Saving new user {}", users);
-        return usersRepo.save(users);
+    private User save(User user){
+        log.info("Saving new user {}", user);
+        return usersRepo.save(user);
     }
 
 
