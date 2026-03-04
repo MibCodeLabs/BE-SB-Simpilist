@@ -4,6 +4,7 @@ import com.mib.simpilist.dto.Auth.AuthenticationResponse;
 import com.mib.simpilist.dto.Auth.LoginRequestDto;
 import com.mib.simpilist.service.Security.AuthService;
 import com.mib.simpilist.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody LoginRequestDto loginRequestDto) throws Exception {
+    public AuthenticationResponse login(@Valid @RequestBody LoginRequestDto loginRequestDto) throws Exception {
         return authService.authenticate(loginRequestDto);
     }
 }

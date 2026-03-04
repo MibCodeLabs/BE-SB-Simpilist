@@ -54,7 +54,17 @@ public class Utilities {
     public static ResponseEntity<Object> generateErrorResponse(Exception exception,ErrorCodes errorCodes,HttpStatus status){
         return new ResponseEntity<> (
                 new ErrorResponse(
-                        status.getReasonPhrase(),
+                        exception.getMessage(),
+                        errorCodes,
+                        status
+                ),
+                status);
+    }
+
+    public static ResponseEntity<Object> generateErrorResponse(String message,ErrorCodes errorCodes,HttpStatus status){
+        return new ResponseEntity<> (
+                new ErrorResponse(
+                        message,
                         errorCodes,
                         status
                 ),

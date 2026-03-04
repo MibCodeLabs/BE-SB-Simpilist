@@ -8,12 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.security.GeneralSecurityException;
+import java.util.stream.Collectors;
 
 import static com.mib.simpilist.utililty.Utilities.generateErrorResponse;
 
@@ -64,6 +66,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             @NotNull HttpStatusCode status,
             @NotNull WebRequest request) {
 
-        return generateErrorResponse(ex, ErrorCodes.BAD_REQUEST, HttpStatus.BAD_REQUEST);
+        return generateErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), ErrorCodes.BAD_REQUEST, HttpStatus.BAD_REQUEST);
     }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request) {
+        String errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .toList()
+                .stream().collect(Collectors.joining(", "));
+
+        return generateErrorResponse(errors, ErrorCodes.BAD_REQUEST, HttpStatus.BAD_REQUEST);
+    }
+
+
 }
