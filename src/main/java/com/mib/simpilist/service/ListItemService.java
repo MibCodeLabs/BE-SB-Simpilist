@@ -1,8 +1,10 @@
 package com.mib.simpilist.service;
 
 import com.mib.simpilist.model.ListGroup;
+import com.mib.simpilist.model.ListItem;
 import com.mib.simpilist.repository.ListItemsRepo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +19,12 @@ public class ListItemService {
         this.listItemsRepo = listItemsRepo;
     }
 
+    public Page<ListItem> getAllListItemsPaged(){
+        return null;
+    }
+
     public void addListItem(ListGroup listGroup){
         return;
     }
+
 }

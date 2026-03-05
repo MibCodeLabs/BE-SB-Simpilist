@@ -2,9 +2,13 @@ package com.mib.simpilist.model;
 
 import com.mib.simpilist.Enum.TodoItemStatus;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "list_items")
+@Getter
+@Setter
 public class ListItem extends BaseEntity{
 
     @Column(name = "title",nullable = false)
