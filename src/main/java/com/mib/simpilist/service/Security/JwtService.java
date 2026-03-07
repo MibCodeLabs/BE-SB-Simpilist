@@ -1,5 +1,6 @@
 package com.mib.simpilist.service.Security;
 
+import com.mib.simpilist.dto.Security.CurrentUserContext;
 import com.mib.simpilist.model.User;
 import com.mib.simpilist.utililty.Utilities;
 import io.jsonwebtoken.Claims;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
@@ -93,7 +93,9 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
 
-        String username = claims.getSubject();
+        String email = claims.getSubject();
+        String id = claims.getId();
+        CurrentUserContext currentUserContext=new CurrentUserContext(Long.getLong(id),email);
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (Utilities.isNotNullOrEmpty(claims.get("roles"))) {
             authorities.addAll(Arrays.stream(claims.get("roles", String.class).split(","))
@@ -102,6 +104,6 @@ public class JwtService {
         }
 
 
-        return new UsernamePasswordAuthenticationToken(username, null, authorities);
+        return new UsernamePasswordAuthenticationToken(currentUserContext, null, authorities);
     }
 }

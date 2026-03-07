@@ -1,6 +1,7 @@
 package com.mib.simpilist.utililty;
 
 import com.mib.simpilist.Enum.ErrorCodes;
+import com.mib.simpilist.dto.Utility.PageResponse;
 import com.mib.simpilist.exception.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -84,4 +85,20 @@ public class Utilities {
                 page.getTotalElements()
         );
     }
+
+    public static <T> PageResponse<T> toPageResponse(Page<T> page) {
+        return new PageResponse<>(
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
+    }
+
+    public static <T, R> PageResponse<R> mapPageToPageResponse(Page<T> page, Function<T, R> mapper){
+        return toPageResponse(mapPage(page,mapper));
+    }
+
 }
