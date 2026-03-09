@@ -1,12 +1,15 @@
 package com.mib.simpilist.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "list_groups",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"user", "group_name"})
@@ -25,4 +28,13 @@ public class ListGroup extends BaseEntity {
 
     @Column(name = "priority")
     private Integer priority;
+
+    @Override
+    public String toString() {
+        return "ListGroup{" +
+                "id=" + this.getId() +
+                ", groupName='" + this.getGroupName() +
+                ", priority=" + this.getPriority() +
+                '}';
+    }
 }

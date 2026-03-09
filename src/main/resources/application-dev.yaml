@@ -24,6 +24,6 @@ security:
   jwt:
     signing:
       secret: "This is a test secret will replace later with env variable"
-    access-expiration: 3600000
+    access-expiration: 360000000
     refresh-expiration: 21600000
     issuer: dev

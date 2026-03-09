@@ -7,7 +7,7 @@ plugins {
 
 group = "com.mib"
 version = "0.0.1-SNAPSHOT"
-description = "Demo project for Spring Boot"
+description = "Simpilist - The all in one list"
 
 java {
 	toolchain {
@@ -35,9 +35,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.16")
+    implementation("io.jsonwebtoken:jjwt-api:0.12.6")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")

@@ -34,7 +34,7 @@ public class AuthService {
     }
 
     private void validatePassword(User user, LoginRequestDto loginRequestDto){
-        //add numbered retries and account ban after multiple invalid retries
+        //todo: add numbered retries and account ban after multiple invalid retries
         if(!passwordService.verifyPassword(loginRequestDto.getPassword(),
                 user.getSalt(),
                 user.getPassword())

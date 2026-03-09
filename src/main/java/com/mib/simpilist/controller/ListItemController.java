@@ -1,16 +1,13 @@
 package com.mib.simpilist.controller;
 
 import com.mib.simpilist.dto.ListItem.ListItemDto;
-import com.mib.simpilist.dto.ListItem.ListItemRequest;
+import com.mib.simpilist.dto.ListItem.ListItemFilterRequest;
 import com.mib.simpilist.dto.Utility.PageResponse;
 import com.mib.simpilist.service.ListItemService;
 import com.mib.simpilist.utililty.Utilities;
 import com.mib.simpilist.utililty.factory.ListItemFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController()
@@ -24,10 +21,16 @@ public class ListItemController {
     }
 
     @GetMapping
-    public PageResponse<ListItemDto> listItems(@PathVariable Long groupId, ListItemRequest listItemRequest) {
+    public PageResponse<ListItemDto> listItems(@PathVariable Long groupId, ListItemFilterRequest listItemFilterRequest) {
         return Utilities.mapPageToPageResponse(
-                listItemService.listItems(groupId,listItemRequest),
+                listItemService.listItems(groupId, listItemFilterRequest),
                 ListItemFactory::buildListItemDto);
+
+    }
+
+    @PostMapping
+    public ListItemDto addListItem(@PathVariable Long groupId,@RequestBody ListItemDto listItemDto) {
+        return ListItemFactory.buildListItemDto(listItemService.addListItem(groupId,listItemDto));
 
     }
 }

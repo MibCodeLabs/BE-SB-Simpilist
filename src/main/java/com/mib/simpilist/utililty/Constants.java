@@ -4,8 +4,11 @@ import org.springframework.data.domain.Sort;
 
 public class Constants {
     public static final String[] PUBLIC_URLS= {
-            "auth/login",
-            "user/register"
+            "/swagger-ui/*",
+            "/v3/api-docs",
+            "/v3/api-docs/*",
+            "/auth/login",
+            "/user/register"
     };
     public static final String GENERIC_ERROR_MESSAGE="Internal Error";
     public static final String GENERIC_ERROR_PARAMETER="-";

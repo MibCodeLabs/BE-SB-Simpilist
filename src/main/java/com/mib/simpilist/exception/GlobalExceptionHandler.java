@@ -55,8 +55,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         } else {
             log.error("Not experiencing NPE");
         }
-        log.error(e.getMessage(),e.fillInStackTrace());
-        return generateErrorResponse(e,ErrorCodes.INTERNAL_ERROR,HttpStatus.INTERNAL_SERVER_ERROR);
+        log.error("Unhandled exception occurred", e);
+        return generateErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                ErrorCodes.INTERNAL_ERROR,
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 
     @Override

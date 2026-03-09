@@ -33,6 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (Utilities.isNotNullOrEmpty(authHeader) && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7).trim();
             if (jwtService.isTokenValid(token)) {
+                //todo think of adding user incase if user is blocked
                 Authentication auth = jwtService.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }

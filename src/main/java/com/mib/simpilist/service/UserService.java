@@ -4,8 +4,9 @@ import com.mib.simpilist.dto.Auth.Registration.UserRegistrationRequest;
 import com.mib.simpilist.exception.ClientException;
 import com.mib.simpilist.exception.ResourceNotFoundException;
 import com.mib.simpilist.model.User;
-import com.mib.simpilist.repository.UsersRepo;
+import com.mib.simpilist.repository.UserRepo;
 import com.mib.simpilist.service.Security.PasswordService;
+import com.mib.simpilist.utililty.Security.UserContext;
 import com.mib.simpilist.utililty.factory.UserFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -19,16 +20,20 @@ import java.util.Optional;
 @Service
 @Slf4j(topic = "UserService")
 public class UserService {
-    private final UsersRepo usersRepo;
+    private final UserRepo userRepo;
     private final PasswordService passwordService;
 
-    public UserService(@Lazy UsersRepo usersRepo, @Lazy PasswordService passwordService){
-        this.usersRepo = usersRepo;
+    public UserService(@Lazy UserRepo userRepo, @Lazy PasswordService passwordService){
+        this.userRepo = userRepo;
         this.passwordService=passwordService;
     }
 
+
+    public User getCurrentUser(){
+        return findUserById(UserContext.getCurrentUser().id());
+    }
     private Optional<User> findUserByIdOptional(Long id){
-        return usersRepo.findById(id);
+        return userRepo.findById(id);
     }
 
     private User findUserById(Long id){
@@ -39,7 +44,7 @@ public class UserService {
     }
 
     public Optional<User> findUserByEmailOptional(String email){
-        return usersRepo.findByEmailLike(email);
+        return userRepo.findByEmailLike(email);
     }
 
     public User findUserByEmail(String email) {
@@ -62,7 +67,7 @@ public class UserService {
 
     private User save(User user){
         log.info("Saving new user {}", user);
-        return usersRepo.save(user);
+        return userRepo.save(user);
     }
 
 

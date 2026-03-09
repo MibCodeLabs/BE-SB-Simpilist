@@ -18,4 +18,16 @@ public class ListItemFactory {
                 .todoItemStatus(listItem.getTodoItemStatus())
                 .build();
     }
+
+    public static ListItem buildListItem(ListItemDto listItemDto,ListGroup listGroup){
+        return ListItem
+                .builder()
+                .id(listItemDto.getId())
+                .title(listItemDto.getTitle())
+                .listGroup(listGroup)
+                .todoItemStatus(listItemDto.getTodoItemStatus())
+                .description(listItemDto.getDescription())
+                .priority(listItemDto.getPriority())
+                .build();
+    }
 }

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GroupCategoriesRepo extends JpaRepository<GroupCategory,Long> {
+public interface GroupCategoryRepo extends JpaRepository<GroupCategory,Long> {
 }
