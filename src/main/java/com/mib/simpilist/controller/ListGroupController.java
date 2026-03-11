@@ -32,4 +32,16 @@ public class ListGroupController {
         return ListGroupFactory.buildListGroupDto(listGroupService.addListGroup(listGroupDto));
 
     }
+
+    @PatchMapping("/{id}")
+    public ListGroupDto modifyListGroup(@PathVariable Long id,@RequestBody ListGroupDto listGroupDto) {
+        return ListGroupFactory.buildListGroupDto(listGroupService.modifyListGroup(id,listGroupDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteListGroup(@PathVariable Long id) {
+        listGroupService.removeListGroup(id);
+    }
+
+
 }

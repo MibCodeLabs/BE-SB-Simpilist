@@ -31,6 +31,18 @@ public class ListItemController {
     @PostMapping
     public ListItemDto addListItem(@PathVariable Long groupId,@RequestBody ListItemDto listItemDto) {
         return ListItemFactory.buildListItemDto(listItemService.addListItem(groupId,listItemDto));
+    }
 
+    @PatchMapping("/{id}")
+    public ListItemDto modifyListItem(@PathVariable Long groupId,
+                                      @PathVariable Long id,
+                                      @RequestBody ListItemDto listItemDto) {
+        return ListItemFactory.buildListItemDto(listItemService.modifyListItem(groupId,id,listItemDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteListItem(@PathVariable Long groupId,
+                                      @PathVariable Long id) {
+        listItemService.deleteItem(groupId,id);
     }
 }

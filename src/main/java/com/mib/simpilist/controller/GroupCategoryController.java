@@ -25,12 +25,21 @@ public class GroupCategoryController {
         return Utilities.mapPageToPageResponse(
                 groupCategoryService.getAllGroupCategories(groupCategoryFilterRequest),
                 GroupCategoryFactory::buildGroupCategoryDto);
-
     }
 
     @PostMapping
     public GroupCategoryDto addListGroup(@RequestBody GroupCategoryDto groupCategoryDto) {
         return GroupCategoryFactory.buildGroupCategoryDto(groupCategoryService.addGroupCategory(groupCategoryDto));
-
     }
+
+    @PatchMapping("/{id}")
+    public GroupCategoryDto modifyGroupCategory(@PathVariable Long id, @RequestBody GroupCategoryDto groupCategoryDto) {
+        return GroupCategoryFactory.buildGroupCategoryDto(groupCategoryService.modifiyGroupCategory(id,groupCategoryDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteGroupCategory(@PathVariable Long id) {
+        groupCategoryService.removeListGroup(id);
+    }
+
 }
