@@ -8,13 +8,13 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "group_categories")
+@Table(name = "categories")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupCategory extends BaseEntity{
+public class Category extends BaseEntity{
 
     @Column(name = "category_name",nullable = false)
     private String categoryName;
@@ -28,7 +28,7 @@ public class GroupCategory extends BaseEntity{
 
     @Override
     public String toString() {
-        return "GroupCategory{" +
+        return "Category{" +
                 "id=" + this.getId() +
                 ", categoryName='" + this.getCategoryName() +
                 ", priority=" + this.getPriority() +

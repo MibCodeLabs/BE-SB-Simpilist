@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ListItemsRepo extends JpaRepository<ListItem,Long>, JpaSpecificationExecutor<ListItem> {
-    Optional<ListItem> findByIdAndListGroup_IdAndListGroup_UserId(Long itemId,Long groupId, Long userId);
+public interface ListItemRepo extends JpaRepository<ListItem,Long>, JpaSpecificationExecutor<ListItem> {
+    Optional<ListItem> findByIdAndGroup_IdAndGroup_UserId(Long itemId, Long groupId, Long userId);
 }

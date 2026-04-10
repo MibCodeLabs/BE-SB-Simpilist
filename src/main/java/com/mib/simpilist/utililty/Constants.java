@@ -8,7 +8,7 @@ public class Constants {
             "/v3/api-docs",
             "/v3/api-docs/*",
             "/auth/login",
-            "/user/register"
+            "/auth/register"
     };
     public static final String GENERIC_ERROR_MESSAGE="Internal Error";
     public static final String GENERIC_ERROR_PARAMETER="-";

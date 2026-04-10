@@ -1,7 +1,7 @@
 package com.mib.simpilist.Specification;
 
 import com.mib.simpilist.exception.ClientException;
-import com.mib.simpilist.model.ListGroup;
+import com.mib.simpilist.model.Group;
 import com.mib.simpilist.model.ListItem;
 import com.mib.simpilist.model.User;
 import com.mib.simpilist.utililty.Security.UserContext;
@@ -37,8 +37,8 @@ public class ListItemSpecification {
 
     public static Specification<ListItem> belongsToCurrentUser() {
         return (root,query,builder)->{
-            Join<ListItem, ListGroup> listGroupJoin=root.join("listGroup", JoinType.INNER);
-            Join<ListGroup, User> userJoin = listGroupJoin.join("user", JoinType.INNER);
+            Join<ListItem, Group> groupJoin=root.join("group", JoinType.INNER);
+            Join<Group, User> userJoin = groupJoin.join("user", JoinType.INNER);
             return builder.equal(userJoin.get("id"),
                     UserContext.getCurrentUser().id());
         };
@@ -49,8 +49,8 @@ public class ListItemSpecification {
             if(Utilities.isNull(groupId)){
                 throw new ClientException("Invalid Group");
             }
-            Join<ListItem, ListGroup> listGroupJoin=root.join("listGroup", JoinType.INNER);
-            return builder.equal(listGroupJoin.get("id"),groupId);
+            Join<ListItem, Group> groupJoin=root.join("group", JoinType.INNER);
+            return builder.equal(groupJoin.get("id"),groupId);
         };
     }
 }

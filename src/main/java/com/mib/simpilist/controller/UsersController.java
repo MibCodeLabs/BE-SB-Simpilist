@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsersController {
     private final UserService userService;
 
-    @PostMapping("/register")
-    public void registerNewUser(@Valid @RequestBody UserRegistrationRequest userRegistrationRequest) throws Exception {
-        userService.registerNewUser(userRegistrationRequest);
-    }
+//    @PostMapping("/register")
+//    public void registerNewUser(@Valid @RequestBody UserRegistrationRequest userRegistrationRequest) throws Exception {
+//        userService.registerNewUser(userRegistrationRequest);
+//    }
 }

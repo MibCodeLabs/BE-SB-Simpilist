@@ -1,7 +1,7 @@
 databaseChangeLog:
 #  create table list group
   - changeSet:
-      id: 1
+      id: create-list-group-table
       author: Ib
       changes:
         - createTable:
@@ -43,7 +43,7 @@ databaseChangeLog:
 
 #add group id column
   - changeSet:
-      id: 2
+      id: add-column-group-id
       author: Ib
       changes:
         - addColumn:
@@ -57,7 +57,7 @@ databaseChangeLog:
 
 #  create add foreign keys
   - changeSet:
-      id: 3
+      id: add-fk-for-group-user-and-item-group
       author: Ib
       changes:
         - addForeignKeyConstraint:
@@ -76,7 +76,7 @@ databaseChangeLog:
 
 #  add index for quick look for list item based on group id
   - changeSet:
-      id: 4
+      id: add-index
       author: Ib
       changes:
       - createIndex:
@@ -89,7 +89,7 @@ databaseChangeLog:
 
 # Add unique constraint for user_id + group_name
   - changeSet:
-      id: 5
+      id: add-unique-constraint-group
       author: Ib
       changes:
         - addUniqueConstraint:

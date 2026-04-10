@@ -28,9 +28,9 @@ public class ListItem extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id",nullable = false)
-    private ListGroup listGroup;
+    private Group group;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "status",nullable = false)
     private TodoItemStatus todoItemStatus;
 
@@ -42,8 +42,8 @@ public class ListItem extends BaseEntity{
                 ", description='" + this.getDescription()  +
                 ", priority=" + this.getPriority() +
                 ", status=" + this.getTodoItemStatus() +
-                ", listGroupId=" + (listGroup != null ? listGroup.getId() : null) +
-                ", listGroupName=" + (listGroup != null ? listGroup.getGroupName() : null) +
+                ", groupId=" + (group != null ? group.getId() : null) +
+                ", groupName=" + (group != null ? group.getGroupName() : null) +
                 '}';
     }
 }

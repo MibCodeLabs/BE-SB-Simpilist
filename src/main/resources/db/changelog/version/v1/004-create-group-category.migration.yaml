@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
+      id: create-group-categories
       author: Ib
       changes:
         - createTable:
@@ -42,7 +42,7 @@ databaseChangeLog:
                     nullable: false
 
   - changeSet:
-      id: 2
+      id: add-fk-fk_group_category_user
       author: Ib
       changes:
         - addForeignKeyConstraint:
@@ -55,7 +55,7 @@ databaseChangeLog:
 
 #add group category id column
   - changeSet:
-      id: 3
+      id: add-group-column
       author: Ib
       changes:
         - addColumn:
@@ -67,7 +67,7 @@ databaseChangeLog:
 
 #add foreign key
   - changeSet:
-      id: 4
+      id: add-fk-list-group-group-category
       author: Ib
       changes:
         - addForeignKeyConstraint:

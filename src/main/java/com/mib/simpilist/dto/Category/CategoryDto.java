@@ -1,11 +1,11 @@
-package com.mib.simpilist.dto.GroupCategory;
+package com.mib.simpilist.dto.Category;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
-public class GroupCategoryDto {
+public class CategoryDto {
     private Long id;
     private String categoryName;
     private Integer priority;

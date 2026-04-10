@@ -1,8 +1,7 @@
 package com.mib.simpilist.dto.ListItem;
 
 import com.mib.simpilist.Enum.TodoItemStatus;
-import com.mib.simpilist.dto.ListGroup.ListGroupDto;
-import com.mib.simpilist.model.ListGroup;
+import com.mib.simpilist.dto.Group.GroupDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +14,6 @@ public class ListItemDto {
     private String title;
     private String description;
     private Integer priority;
-    private ListGroupDto listGroup;
+    private GroupDto group;
     private TodoItemStatus todoItemStatus;
 }

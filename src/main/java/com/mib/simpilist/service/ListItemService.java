@@ -6,7 +6,7 @@ import com.mib.simpilist.dto.ListItem.ListItemDto;
 import com.mib.simpilist.dto.ListItem.ListItemFilterRequest;
 import com.mib.simpilist.exception.ResourceNotFoundException;
 import com.mib.simpilist.model.ListItem;
-import com.mib.simpilist.repository.ListItemsRepo;
+import com.mib.simpilist.repository.ListItemRepo;
 import com.mib.simpilist.utililty.Security.UserContext;
 import com.mib.simpilist.utililty.factory.ListItemFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -18,16 +18,16 @@ import org.springframework.stereotype.Service;
 @Slf4j(topic ="ListItemService" )
 public class ListItemService {
 
-    private final ListGroupService listGroupService;
-    private final ListItemsRepo listItemsRepo;
+    private final GroupService groupService;
+    private final ListItemRepo listItemRepo;
 
-    public ListItemService(ListGroupService listGroupService, ListItemsRepo listItemsRepo) {
-        this.listGroupService = listGroupService;
-        this.listItemsRepo = listItemsRepo;
+    public ListItemService(GroupService groupService, ListItemRepo listItemRepo) {
+        this.groupService = groupService;
+        this.listItemRepo = listItemRepo;
     }
 
     public Page<ListItem> listItems(Long groupId, ListItemFilterRequest listItemFilterRequest){
-        return listItemsRepo.findAll(
+        return listItemRepo.findAll(
                 buildSpecifications(groupId, listItemFilterRequest),
                 listItemFilterRequest.getPageable());
     }
@@ -43,12 +43,12 @@ public class ListItemService {
     @RollbackTransaction
     public ListItem addListItem(Long groupId,ListItemDto listItemDto){
         return save(ListItemFactory.buildListItem(listItemDto,
-                listGroupService.findById(groupId)));
+                groupService.findById(groupId)));
     }
 
     @RollbackTransaction
     public ListItem modifyListItem(Long groupId,Long id,ListItemDto listItemDto){
-        ListItem item=findByIdAndListGroup_IdAndListGroup_UserId(
+        ListItem item= findByIdAndGroup_IdAndGroup_UserId(
                 groupId,
                 id,
                 UserContext.getCurrentUser().id());
@@ -75,14 +75,14 @@ public class ListItemService {
             item.setPriority(listItemDto.getPriority());
         }
 
-        if(!listItemDto.getListGroup().getId().equals(item.getListGroup().getId())){
-            item.setListGroup(listGroupService.findByIdAndCurrentUserId(listItemDto.getListGroup().getId()));
+        if(!listItemDto.getGroup().getId().equals(item.getGroup().getId())){
+            item.setGroup(groupService.findByIdAndCurrentUserId(listItemDto.getGroup().getId()));
         }
     }
 
-    private ListItem findByIdAndListGroup_IdAndListGroup_UserId(Long itemId,Long groupId,Long userId){
+    private ListItem findByIdAndGroup_IdAndGroup_UserId(Long itemId, Long groupId, Long userId){
         //todo add log error
-        return listItemsRepo.findByIdAndListGroup_IdAndListGroup_UserId(
+        return listItemRepo.findByIdAndGroup_IdAndGroup_UserId(
                 itemId,
                 groupId,
                 userId).orElseThrow(
@@ -92,17 +92,17 @@ public class ListItemService {
 
     @RollbackTransaction
     public ListItem save(ListItem listItem){
-        return listItemsRepo.save(listItem);
+        return listItemRepo.save(listItem);
     }
 
     @RollbackTransaction
     public void delete(ListItem listItem){
-        listItemsRepo.delete(listItem);
+        listItemRepo.delete(listItem);
     }
 
     @RollbackTransaction
     public void deleteItem(Long groupId, Long id) {
-        ListItem item=findByIdAndListGroup_IdAndListGroup_UserId(id,
+        ListItem item= findByIdAndGroup_IdAndGroup_UserId(id,
                 groupId,
                 UserContext.getCurrentUser().id());
         delete(item);

@@ -10,17 +10,17 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "list_groups",
+@Table(name = "groups",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"user", "group_name"})
         })
-public class ListGroup extends BaseEntity {
+public class Group extends BaseEntity {
     @Column(name = "group_name", nullable = false)
     private String groupName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_category_id")
-    private GroupCategory groupCategory;
+    @JoinColumn(name = "category_id",nullable = false)
+    private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)
@@ -31,7 +31,7 @@ public class ListGroup extends BaseEntity {
 
     @Override
     public String toString() {
-        return "ListGroup{" +
+        return "Group{" +
                 "id=" + this.getId() +
                 ", groupName='" + this.getGroupName() +
                 ", priority=" + this.getPriority() +
