@@ -11,6 +11,7 @@ public class CategoryFactory {
                 .categoryName(category.getCategoryName())
                 .priority(category.getPriority())
                 .id(category.getId())
+                .groupCount(category.getGroupCount())
                 .build();
     }
 

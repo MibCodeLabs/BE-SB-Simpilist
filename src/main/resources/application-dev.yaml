@@ -8,6 +8,12 @@ spring:
       hibernate:
         ddl-auto: update
 
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
   datasource:
     url: jdbc:postgresql://localhost:5432/simpilist
     username: postgres
@@ -24,6 +30,6 @@ security:
   jwt:
     signing:
       secret: "This is a test secret will replace later with env variable"
-    access-expiration: 360000000
+    access-expiration: 900000
     refresh-expiration: 21600000
     issuer: dev

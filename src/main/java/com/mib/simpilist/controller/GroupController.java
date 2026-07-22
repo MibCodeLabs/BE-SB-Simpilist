@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @Slf4j(topic = "GroupController")
-@RequestMapping("/groups")
+@RequestMapping("/group")
+@CrossOrigin
 public class GroupController {
     private final GroupService groupService;
 

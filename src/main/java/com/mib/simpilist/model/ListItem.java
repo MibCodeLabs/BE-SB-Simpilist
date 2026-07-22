@@ -30,7 +30,7 @@ public class ListItem extends BaseEntity{
     @JoinColumn(name = "group_id",nullable = false)
     private Group group;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status",nullable = false)
     private TodoItemStatus todoItemStatus;
 

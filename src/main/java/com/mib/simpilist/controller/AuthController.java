@@ -3,6 +3,7 @@ package com.mib.simpilist.controller;
 import com.mib.simpilist.dto.Auth.AuthenticationResponse;
 import com.mib.simpilist.dto.Auth.LoginRequestDto;
 import com.mib.simpilist.dto.Auth.Registration.UserRegistrationRequest;
+import com.mib.simpilist.dto.Auth.UserTokensDto;
 import com.mib.simpilist.service.Security.AuthService;
 import com.mib.simpilist.service.UserService;
 import jakarta.validation.Valid;
@@ -24,8 +25,20 @@ public class AuthController {
     }
 
     @CrossOrigin
+    @PostMapping("/logout")
+    public void logout(@Valid @RequestBody UserTokensDto userTokensDto) {
+        authService.logout(userTokensDto);
+    }
+
+    @CrossOrigin
     @PostMapping("/register")
     public void registerNewUser(@Valid @RequestBody UserRegistrationRequest userRegistrationRequest) throws Exception {
         userService.registerNewUser(userRegistrationRequest);
+    }
+
+    @CrossOrigin
+    @PostMapping("/refresh")
+    public UserTokensDto refreshToken(@RequestBody UserTokensDto userTokensDto) throws Exception {
+        return authService.refreshTokens(userTokensDto);
     }
 }

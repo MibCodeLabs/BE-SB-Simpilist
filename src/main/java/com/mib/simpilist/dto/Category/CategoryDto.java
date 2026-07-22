@@ -9,4 +9,5 @@ public class CategoryDto {
     private Long id;
     private String categoryName;
     private Integer priority;
+    private Integer groupCount;
 }

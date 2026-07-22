@@ -49,8 +49,8 @@ public class ListItemService {
     @RollbackTransaction
     public ListItem modifyListItem(Long groupId,Long id,ListItemDto listItemDto){
         ListItem item= findByIdAndGroup_IdAndGroup_UserId(
-                groupId,
                 id,
+                groupId,
                 UserContext.getCurrentUser().id());
         handleItemFieldUpdate(item,listItemDto);
         return save(item);

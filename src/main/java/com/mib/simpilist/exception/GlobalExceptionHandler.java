@@ -15,7 +15,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.security.GeneralSecurityException;
-import java.util.stream.Collectors;
 
 import static com.mib.simpilist.utililty.Utilities.generateErrorResponse;
 
@@ -24,8 +23,8 @@ import static com.mib.simpilist.utililty.Utilities.generateErrorResponse;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     // We can add custom logging logic to handle specific errors
-    @ExceptionHandler(Forbidden.class)
-    public ResponseEntity<?> handleForbiddenException(Forbidden e) {
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<?> handleForbiddenException(ForbiddenException e) {
         log.error(e.getMessage());
         return generateErrorResponse(e,ErrorCodes.FORBIDDEN,HttpStatus.FORBIDDEN);
     }

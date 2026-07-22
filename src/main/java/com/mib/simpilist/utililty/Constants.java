@@ -8,7 +8,9 @@ public class Constants {
             "/v3/api-docs",
             "/v3/api-docs/*",
             "/auth/login",
-            "/auth/register"
+            "/auth/logout",
+            "/auth/register",
+            "/auth/refresh"
     };
     public static final String GENERIC_ERROR_MESSAGE="Internal Error";
     public static final String GENERIC_ERROR_PARAMETER="-";
@@ -18,4 +20,6 @@ public class Constants {
     public static final Sort.Direction DEFAULT_PAGE_SORT_DIRECTION=Sort.Direction.ASC;
     public static final Integer DEFAULT_PAGE_NUMBER=0;
     public static final Integer DEFAULT_PAGE_SIZE=10;
+
+    public static final String REFRESH_TOKEN_KEY_PREFIX = "refresh-hash:";
 }
