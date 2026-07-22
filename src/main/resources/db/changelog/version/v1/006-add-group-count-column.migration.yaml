@@ -1,0 +1,30 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: add-group-count-column
+      author: Ib
+      changes:
+        - addColumn:
+            tableName: categories
+            columns:
+              - column:
+                  name: group_count
+                  type: INT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: backfill-group-count
+      author: Ib
+      changes:
+        - sql:
+            sql: |
+              UPDATE categories c
+              SET group_count = sub.count
+              FROM (
+                SELECT category_id, COUNT(*) AS count
+                FROM groups
+                GROUP BY category_id
+              ) sub
+              WHERE c.id = sub.category_id;

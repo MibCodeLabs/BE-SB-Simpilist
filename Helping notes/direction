@@ -1,0 +1,10 @@
+after manually implementing i found that common functionality can be centralized from crud operations and on further research
+it looks like factory is no longer a De-Facto pattern and @mapper is now used, may look into this
+i also found that conversion in controller is uncommon, so i will try to change service to be the one responsible
+firstly let me complete the logic and 1 controller method is remaining then i need to implement test cases then create the frontend then i will look into this
+
+todo
+create abstract baseCrud class that employs mapper so a huge chunk of logic can be reused
+create all the necessary tests (unit+integration)+apply test container
+integrate frontend and apply end-to-end tests
+

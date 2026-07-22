@@ -1,0 +1,75 @@
+databaseChangeLog:
+
+  # 1. Rename tables
+  - changeSet:
+      id: rename-group-categories-to-categories
+      author: Ib
+      changes:
+        - renameTable:
+            oldTableName: group_categories
+            newTableName: categories
+
+  - changeSet:
+      id: rename-list-groups-to-groups
+      author: Ib
+      changes:
+        - renameTable:
+            oldTableName: list_groups
+            newTableName: groups
+
+  # rename column for group
+  - changeSet:
+      id: rename-group-category-column
+      author: Ib
+      changes:
+        - renameColumn:
+            tableName: groups
+            oldColumnName: group_category_id
+            newColumnName: category_id
+            columnDataType: BIGINT
+
+
+  - changeSet:
+      id: drop-old-fks
+      author: Ib
+      changes:
+
+        - dropForeignKeyConstraint:
+            baseTableName: groups
+            constraintName: fk_list_group_user
+
+        - dropForeignKeyConstraint:
+            baseTableName: categories
+            constraintName: fk_group_category_user
+
+        - dropForeignKeyConstraint:
+            baseTableName: groups
+            constraintName: fk_list_group_group_category
+
+
+  # 2. Recreate FK: groups -> users
+  - changeSet:
+      id: fk-groups-user
+      author: Ib
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: groups
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_group_user
+
+
+
+  # 3. Add category relation to groups
+
+  - changeSet:
+      id: fk-groups-category
+      author: Ib
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: groups
+            baseColumnNames: category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            constraintName: fk_group_category

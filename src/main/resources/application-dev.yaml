@@ -1,0 +1,35 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: update
+
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/simpilist
+    username: postgres
+    password: Postgres0907007
+
+
+logging:
+  level:
+    org.springframework: INFO
+
+
+
+security:
+  jwt:
+    signing:
+      secret: "This is a test secret will replace later with env variable"
+    access-expiration: 900000
+    refresh-expiration: 21600000
+    issuer: dev

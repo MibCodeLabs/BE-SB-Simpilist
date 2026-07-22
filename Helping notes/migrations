@@ -1,0 +1,13 @@
+using liquibase is little different as compared to using flyway
+
+i see that it can use include all to include all changelogs in folder or we can manually add using include then using file->filepath
+
+i have come up with solution for this by dividing it into versions which would have their own changelog which would include all the migrations
+which would then be included into the master changelog
+
+i would be using Declarative schema migration (DSL-based database migration -> Liquibase’s changeLog DSL (Domain-Specific Language))
+
+why is DSM DSL good? because it gives Database independence if i want i can change to mysql or oracle sql if needed(within relational)
+
+if i want to switch to nosql then redesign would be required and tools flyway or liquibase would not serve any good purpose
+

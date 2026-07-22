@@ -1,0 +1,23 @@
+spring:
+  config:
+    activate:
+      on-profile: qa
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: validate
+
+  datasource:
+    url: ${QA_DATABASE_URL}
+    username: ${QA_DATABASE_USERNAME}
+    password: ${QA_DATABASE_PASSWORD}
+
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+logging:
+  level:
+    org.springframework: WARN
